@@ -26,7 +26,7 @@ class UserController {
     await pool.query("INSERT INTO users set ?", [req.body]);
     res.json({ message: "user saved" });
   }
-  public async delete(req: Request, res: Response): Promise<void> {
+  public async delete(req: Request, res: Response) {
     const { id } = req.params;
     const apidelete = await pool.query("DELETE FROM users where id = ?", [id]);
     if (apidelete.statusCode == "200") {
@@ -36,6 +36,8 @@ class UserController {
     }
     res.json({ text: "deleting" + req.params.id });
   }
+
+
   public async update(req: Request, res: Response): Promise<any> {
     const { id } = req.params;
     const apiUpdate = await pool.query("UPDATE  users set ? WHERE id = ?", [req.body,id]);
