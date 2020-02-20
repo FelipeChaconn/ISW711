@@ -15,7 +15,7 @@ class ApiController extends Controller
         
 
     $newArray= json_decode($body);
-    $newArr = array_splice( $newArray, 0, 2);
+    $newArr = array_splice( $newArray, 0, 10);
     return $newArr;
     }
 }
