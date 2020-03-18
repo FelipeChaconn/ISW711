@@ -16,7 +16,7 @@ const database_1 = __importDefault(require("../database"));
 class UserController {
     list(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const apiUsers = yield database_1.default.query("SELECT * FROM users");
+            const apiUsers = yield database_1.default.query('SELECT * FROM users');
             if (res.statusCode) {
                 res.json(apiUsers);
                 console.log("status code", res.statusCode);
@@ -27,11 +27,12 @@ class UserController {
             return apiUsers;
         });
     }
+    //el any es porque aveces puede que retorne una promesa o un objeto json
     getOne(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
             //el await es para hacer el la consulta  asincrono
-            const apiuser = yield database_1.default.query("SELECT * FROM users where id = ? ", [id]);
+            const apiuser = yield database_1.default.query('SELECT * FROM users where id = ? ', [id]);
             if (apiuser.length > 0) {
                 console.log(apiuser);
                 res.json(apiuser[0]);
@@ -41,6 +42,7 @@ class UserController {
             }
         });
     }
+    //el Promise<void> quiere decir que va a ejecutar una promesa pero no retorna nada 
     create(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             yield database_1.default.query("INSERT INTO users set ?", [req.body]);
@@ -50,14 +52,13 @@ class UserController {
     delete(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            const apidelete = yield database_1.default.query("DELETE FROM users where id = ?", [id]);
-            if (apidelete.statusCode == "200") {
-                res.json({ text: "Deleted succes" });
+            try {
+                yield database_1.default.query('DELETE FROM users where id = ?', [id]);
+                res.json({ message: "deleting" + req.params.id });
             }
-            else {
-                res.status(404).json({ text: "Deleted filed" });
+            catch (error) {
+                res.status(404).json({ text: "User doesnt exist" });
             }
-            res.json({ text: "deleting" + req.params.id });
         });
     }
     update(req, res) {

@@ -16,20 +16,20 @@ export class UsersService {
     private http: HttpClient
   ) {}
 
-  getUsers() {
+  getUsers():Observable<User> {
     return this.http.get(`${this.API_URI}/users`);
   }
-  getUser(id: string) {
+  getUser(id: string):Observable<User> {
     return this.http.get(`${this.API_URI}/users/${id}`);
   }
-  saveUser(user: User) {
+  saveUser(user: User):Observable<User> {
     return this.http.post(`${this.API_URI}/users/`,user);
   }
-  deleteUser(id: string) {
+  deleteUser(id: string):Observable<User> {
     return this,this.http.delete(`${this.API_URI}/users/${id}`);
   }
-  //Mejor especificaciones con el observable
-  updateUser(id: string,updateUser:User):Observable<User> {
+  //Mejor especificaciones con el observable y con | le puedo pasar a que recibe dos tipos de datos 
+  updateUser(id: string|number,updateUser:User):Observable<User> {
     return this,this.http.put(`${this.API_URI}/users/${id}`,updateUser);
   }
 }

@@ -1,4 +1,5 @@
 <div class="col-md-12">
+  <a [routerLink]="[ '/users/add']"  class="col-md-2 btn btn-success btn-block">Add</a> 
     <table class="table">
         <thead>
           <tr>
@@ -10,17 +11,16 @@
             <th>Actions</th>
           </tr>
         </thead>
-        <tbody *ngFor="let user of users">
-          <tr>
+        <tbody >
+          <tr *ngFor="let user of users">
             <td ><img style="width: 80px;" [src]="user.image" alt="profile photo"></td>
             <td>{{user.id}}</td>
             <td>{{user.first_name}}</td>
             <td>{{user.last_name}}</td>
             <td>{{user.register_at}}</td>
             <td>
-                <a  href="">Edit</a> 
-                /
-                <a href="">Delete</a>
+             <a  class="btn btn-info btn-block" [routerLink]="[ '/users/edit/', user.id ]">Edit</a>
+                <button type="button"  class="btn btn-danger btn-block" (click)="deleteUser(user.id)">Delete</button>
             </td>
 
           </tr>
